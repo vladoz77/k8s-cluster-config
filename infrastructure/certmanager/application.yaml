@@ -18,9 +18,9 @@ spec:
     helm:
       parameters:
         - name: crds.enabled
-          value: true
+          value: "true"
         - name: config.enableGatewayAPI
-          value: true
+          value: "true"
   - repoURL: https://charts.jetstack.io
     chart: trust-manager
     targetRevision: v0.22.1
@@ -31,7 +31,8 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - PruneLast=true
