@@ -21,9 +21,9 @@ spec:
           value: "true"
         - name: config.enableGatewayAPI
           value: "true"
-  - repoURL: https://charts.jetstack.io
+  - repoURL: oci://quay.io/jetstack/charts/trust-manager
     chart: trust-manager
-    targetRevision: v0.22.1
+    targetRevision: 0.22.1
   - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
     targetRevision: HEAD 
     path: infrastructure/certmanager/manifests
