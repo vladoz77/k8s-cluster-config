@@ -15,14 +15,6 @@ spec:
   - repoURL: https://metallb.github.io/metallb
     chart: metallb
     targetRevision: v0.16.1
-    helm:
-      parameters:
-        - name: nameOverride
-          value: metallb
-        - name: fullnameOverride
-          value: metallb
-        - name: prometheus.scrapeAnnotations
-          value: true
   - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
     targetRevision: HEAD 
     path: infrastructure/metallb/manifests
