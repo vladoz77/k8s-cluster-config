@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
+  labels:
+    app: metallb
+spec:
+  project: infrastructure
+  sources:
+  - repoURL: https://metallb.github.io/metallb
+    chart: metallb
+    targetRevision: v0.16.1
+    helm:
+      parameters:
+        - name: nameOverride
+          value: metallb
+        - name: fullnameOverride
+          value: metallb
+        - name: prometheus.scrapeAnnotations
+          value: true
+  - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
+    targetRevision: HEAD 
+    path: infrastructure/metallb/manifests
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: metallb-system
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true

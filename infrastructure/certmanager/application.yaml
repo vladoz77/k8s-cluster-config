@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
+  labels:
+    app: cert-manager
+spec:
+  project: infrastructure
+  sources:
+  - repoURL: oci://quay.io/jetstack/charts/cert-manager
+    chart: cert-manager
+    targetRevision: v1.20.2
+    helm:
+      parameters:
+        - name: crds.enabled
+          value: true
+        - name: config.enableGatewayAPI
+          value: true
+  - repoURL: https://charts.jetstack.io
+    chart: trust-manager
+    targetRevision: v0.22.1
+  - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
+    targetRevision: HEAD 
+    path: infrastructure/certmanager/manifests
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: cert-manager
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true

@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infrastructure
+  namespace: argocd
+spec:
+  sourceRepos:
+  - https://github.com/vladoz77/k8s-cluster-config.git
+  - oci://quay.io/jetstack/charts/cert-manager
+  - oci://docker.io/envoyproxy/gateway-helm
+  - https://metallb.github.io/metallb
+  - https://charts.jetstack.io
+  - https://argoproj.github.io/argo-helm
+  destinations:
+  - namespace: argocd
+    server: https://kubernetes.default.svc
+  - namespace: cert-manager
+    server: https://kubernetes.default.svc
+  - namespace: envoy-gateway-system
+    server: https://kubernetes.default.svc
+  - namespace: metallb-system
+    server: https://kubernetes.default.svc
+  - namespace: monitoring
+    server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  orphanedResources:
+    warn: true

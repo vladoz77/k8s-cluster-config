@@ -1,0 +1,87 @@
+nameOverride: argocd
+fullnameOverride: argocd
+
+crds:
+  keep: false
+
+global:
+  domain: argocd.dev.local
+  logging:
+    format: json
+    level: info
+
+configs:
+  cm:
+    application.resourceTrackingMethod: annotation
+    controller.diff.server.side: "true"
+  secret:
+    argocdServerAdminPassword: "$2a$10$S6gJky57fHflfWp7RC7Y6OLTN1I6VMRelH/jsNP3DCxOyVf5JVf9a"
+controller:
+  replicas: 1
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8082"
+
+server:
+  extraArgs:
+    - --insecure
+  httproute:
+    enabled: true
+    parentRefs:
+    - name: envoy-gateway
+      namespace: envoy-gateway-system
+      sectionName: https
+      port: 443
+    hostnames:
+    - argocd.dev.local
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8083"
+    
+
+repoServer:
+  volumes:
+  - name: trust-ca
+    configMap:
+      name: trust-ca
+  volumeMounts:
+  - mountPath: /etc/ssl/certs/ca.pem
+    name: trust-ca
+    subPath: trust-bundle.pem
+    readOnly: true
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8084"
+
+dex:
+  enabled: false
+
+redis:
+  enabled: true
+
+notifications:
+  enabled: true
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9001"
+
+
+applicationSet:
+  metrics:
+    enabled: true
+    service:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"

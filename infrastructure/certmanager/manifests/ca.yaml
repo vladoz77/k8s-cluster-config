@@ -1,0 +1,62 @@
+# Create self-signed issuer
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-issuer
+spec:
+  selfSigned: {}
+
+---
+# Create CA certificate
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ca
+  namespace: cert-manager
+spec:
+  isCA: true
+  subject:
+    organizations:
+      - "Vlad's homelab"
+    organizationalUnits:
+      - "Home lab"
+    localities:
+      - "Ryazan"
+    countries:
+      - "RU"
+  commonName: ca
+  secretName: ca-secret
+  privateKey:
+    encoding: PKCS8
+    algorithm: RSA
+    size: 4096
+    rotationPolicy: Always
+  issuerRef:
+    name: selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+
+---
+# Create CA Issure 
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: ca-issuer
+spec:
+  ca:
+    secretName: ca-secret
+
+---
+# CA bundle
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: trust-ca
+spec:
+  sources:
+  - secret:
+      name: ca-secret
+      key: tls.crt
+  target:
+    configMap:
+      key: trust-bundle.pem
