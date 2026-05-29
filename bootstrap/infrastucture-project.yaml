@@ -13,15 +13,7 @@ spec:
   - https://charts.jetstack.io
   - https://argoproj.github.io/argo-helm
   destinations:
-  - namespace: argocd
-    server: https://kubernetes.default.svc
-  - namespace: cert-manager
-    server: https://kubernetes.default.svc
-  - namespace: envoy-gateway-system
-    server: https://kubernetes.default.svc
-  - namespace: metallb-system
-    server: https://kubernetes.default.svc
-  - namespace: monitoring
+  - namespace: '*'
     server: https://kubernetes.default.svc
   namespaceResourceWhitelist:
   - group: '*'
