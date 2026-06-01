@@ -12,18 +12,21 @@ metadata:
 spec:
   project: infrastructure
   sources:
-  - repoURL: oci://quay.io/jetstack/charts/cert-manager
+  - repoURL: quay.io/jetstack/charts
     chart: cert-manager
     targetRevision: v1.20.2
     helm:
+      releaseName: cert-manager
       parameters:
         - name: crds.enabled
           value: "true"
         - name: config.enableGatewayAPI
           value: "true"
-  - repoURL: oci://quay.io/jetstack/charts/trust-manager
+  - repoURL: quay.io/jetstack/charts
     chart: trust-manager
     targetRevision: 0.22.1
+    helm:
+      releaseName: trust-manager
   - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
     targetRevision: HEAD 
     path: infrastructure/certmanager/manifests
@@ -36,3 +39,5 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
+      - SkipDryRunOnMissingResource=true

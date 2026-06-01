@@ -6,8 +6,7 @@ metadata:
 spec:
   sourceRepos:
   - https://github.com/vladoz77/k8s-cluster-config.git
-  - oci://quay.io/jetstack/charts/cert-manager
-  - oci://quay.io/jetstack/charts/trust-manager
+  - quay.io/jetstack/charts
   - registry-1.docker.io/envoyproxy
   - https://metallb.github.io/metallb
   - https://charts.jetstack.io
