@@ -17,6 +17,7 @@ spec:
     targetRevision: v1.8.0
     helm:
       releaseName: eg
+      skipCrds: true
   - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
     targetRevision: HEAD 
     path: infrastructure/gateway/manifests
@@ -29,3 +30,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
