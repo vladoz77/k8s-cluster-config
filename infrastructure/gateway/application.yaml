@@ -13,8 +13,8 @@ spec:
   project: infrastructure
   sources:
   - repoURL: oci://docker.io/envoyproxy/gateway-helm
-    chart: eg
-    targetRevision: v1.7.2
+    chart: gateway-helm
+    targetRevision: v1.8.0
   - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
     targetRevision: HEAD 
     path: infrastructure/gateway/manifests
