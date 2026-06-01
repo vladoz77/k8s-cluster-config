@@ -67,6 +67,9 @@ dex:
 
 redis:
   enabled: true
+  image: 
+    repository: redis
+    tag: 8.2.3-alpine
 
 notifications:
   enabled: true
