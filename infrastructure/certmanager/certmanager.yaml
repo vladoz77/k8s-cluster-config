@@ -4,7 +4,7 @@ metadata:
   name: cert-manager
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "4"
   finalizers:
     - resources-finalizer.argocd.argoproj.io/background
   labels:
@@ -27,9 +27,6 @@ spec:
     targetRevision: 0.22.1
     helm:
       releaseName: trust-manager
-  - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
-    targetRevision: HEAD 
-    path: infrastructure/certmanager/manifests
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager

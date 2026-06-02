@@ -1,33 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: envoy-gateway
+  name: argocd
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "6"
   finalizers:
     - resources-finalizer.argocd.argoproj.io/background
   labels:
-    app: envoy-gateway
+    app: argocd
 spec:
   project: infrastructure
   sources:
-  - repoURL: registry-1.docker.io/envoyproxy
-    chart: gateway-helm
-    targetRevision: v1.8.0
-    helm:
-      releaseName: eg
-      skipCrds: true
   - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
     targetRevision: HEAD 
-    path: infrastructure/gateway/manifests
+    ref: myRepo
+  - repoURL: https://argoproj.github.io/argo-helm
+    chart: argo-cd
+    targetRevision: 9.5.17
+    helm:
+      valueFiles:
+        - $myRepo/infrastructure/argocd/values.yaml
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: envoy-gateway-system
+    namespace: argocd
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    automated: {}
     syncOptions:
       - CreateNamespace=true
+      - PruneLast=true
       - ServerSideApply=true

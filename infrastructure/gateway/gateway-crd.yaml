@@ -20,10 +20,6 @@ spec:
       parameters:
         - name: crds.gatewayAPI.enabled
           value: "true"
-        - name: crds.gatewayAPI.channel
-          value: experimental
-        - name: crds.envoyGateway.enabled
-          value: "true"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: kube-system
