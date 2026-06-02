@@ -1,26 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metallb
+  name: envoy-gateway-manifest
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "3"
   finalizers:
     - resources-finalizer.argocd.argoproj.io/background
   labels:
-    app: metallb
+    app: envoy-gateway-manifest
 spec:
   project: infrastructure
   sources:
-  - repoURL: https://metallb.github.io/metallb
-    chart: metallb
-    targetRevision: v0.16.1
+  - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
+    targetRevision: HEAD 
+    path: infrastructure/gateway/manifests
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: metallb-system
+    namespace: envoy-gateway-system
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
