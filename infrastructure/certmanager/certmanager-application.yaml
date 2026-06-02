@@ -22,11 +22,6 @@ spec:
           value: "true"
         - name: config.enableGatewayAPI
           value: "true"
-  - repoURL: quay.io/jetstack/charts
-    chart: trust-manager
-    targetRevision: 0.22.1
-    helm:
-      releaseName: trust-manager
   destination:
     server: "https://kubernetes.default.svc"
     namespace: cert-manager

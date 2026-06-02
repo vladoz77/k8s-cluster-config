@@ -1,32 +1,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
+  name: trust-manager-manifest
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "8"
+    argocd.argoproj.io/sync-wave: "7"
   finalizers:
     - resources-finalizer.argocd.argoproj.io/background
   labels:
-    app: argocd
+    app: trust-manager-manifest
 spec:
   project: infrastructure
   sources:
   - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
     targetRevision: HEAD 
-    ref: myRepo
-  - repoURL: https://argoproj.github.io/argo-helm
-    chart: argo-cd
-    targetRevision: 9.5.17
-    helm:
-      valueFiles:
-        - $myRepo/infrastructure/argocd/values.yaml
+    path: infrastructure/trustmanager/manifests
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: argocd
+    namespace: cert-manager
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - PruneLast=true
       - ServerSideApply=true
+      - SkipDryRunOnMissingResource=true

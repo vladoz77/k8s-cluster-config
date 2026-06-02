@@ -46,17 +46,3 @@ spec:
   ca:
     secretName: ca-secret
 
----
-# CA bundle
-apiVersion: trust.cert-manager.io/v1alpha1
-kind: Bundle
-metadata:
-  name: trust-ca
-spec:
-  sources:
-  - secret:
-      name: ca-secret
-      key: tls.crt
-  target:
-    configMap:
-      key: trust-bundle.pem
