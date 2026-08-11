@@ -14,7 +14,7 @@ spec:
   sources:
   - repoURL: https://github.com/vladoz77/k8s-cluster-config.git
     targetRevision: HEAD 
-    path: infrastructure/localpathprovixion/manifests
+    path: infrastructure/localpathprovisioner/manifests
   destination:
     server: "https://kubernetes.default.svc"
     namespace: local-path-storage
