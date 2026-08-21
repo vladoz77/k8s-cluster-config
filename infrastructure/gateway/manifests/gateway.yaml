@@ -24,4 +24,6 @@ spec:
     tls:
       mode: Terminate
       certificateRefs:
-      - name: envoy-tls-secret
+      - group: ""
+        kind: Secret
+        name: envoy-tls-secret
