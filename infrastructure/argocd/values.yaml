@@ -31,10 +31,12 @@ server:
   httproute:
     enabled: true
     parentRefs:
-    - name: envoy-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-gateway
       namespace: envoy-gateway-system
-      sectionName: https
       port: 443
+      sectionName: https
     hostnames:
     - argocd.dev.local
   metrics:
