@@ -28,17 +28,17 @@ controller:
 server:
   extraArgs:
     - --insecure
-  # httproute:
-  #   enabled: true
-  #   parentRefs:
-  #   - group: gateway.networking.k8s.io
-  #     kind: Gateway
-  #     name: envoy-gateway
-  #     namespace: envoy-gateway-system
-  #     port: 443
-  #     sectionName: https
-  #   hostnames:
-  #   - argocd.dev.local
+  httproute:
+    enabled: true
+    parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-gateway
+      namespace: envoy-gateway-system
+      port: 443
+      sectionName: https
+    hostnames:
+    - argocd.app.int.devhomelab.site
   metrics:
     enabled: true
     service:
