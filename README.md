@@ -65,7 +65,7 @@ GitOps-конфигурация Kubernetes-кластера для базово�
 | Wave | Application | Что делает |
 | --- | --- | --- |
 | `1` | `metallb` | Устанавливает MetalLB |
-| `1` | `envoy-gateway-crds` | Устанавливает CRD Envoy Gateway/Gateway API |
+| `1` | `envoy-gateway-crds` | Устанавливает CRD Envoy Gateway/Gateway API |k a
 | `2` | `metallb-manifest` | Создаёт `IPAddressPool` и `L2Advertisement` |
 | `3` | `envoy-gateway` | Устанавливает Envoy Gateway |
 | `3` | `envoy-gateway-manifest` | Создаёт `GatewayClass` и `Gateway` |
